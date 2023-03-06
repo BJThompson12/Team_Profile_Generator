@@ -206,6 +206,7 @@ function promptMemberQuestions(){
 function promptEngineerQuestions(){
   inquirer.prompt(engineerQuestionsArray)
   .then((answers) =>{
+    // add the role to the object
     answers['role']= 'Manager';
     console.log(answers);
     promptMemberQuestions();
