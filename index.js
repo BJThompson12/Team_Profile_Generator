@@ -6,31 +6,11 @@ const fs = require('fs');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const managerQuestions = require('./lib/managerQuestions')
 
 // array will be needed to put the answers into
 const generatedTeamArray = [];
-const managerQuestionsArray = [
-  {
-    type: 'input',
-    message: 'What is the team manager\'s name?',
-    name: 'name',
-  },
-  {
-    type: 'input',
-    message: 'What is the team manager\'s employee ID',
-    name: 'employeeId',
-  },
-  {
-    type: 'input',
-    message: 'What is the team manager\'s email address?',
-    name: 'emailAddress',
-  },
-  {
-    type: 'input',
-    message: 'What is the team manger\'s Office Number',
-    name: 'officeNumber',
-  },
-]
+
 const newMemberQuestion = [
   {
     type: 'list',
@@ -83,6 +63,14 @@ const internQuestionsArray = [
     name: 'school',
   }
 ]
+
+//check prompt inputs using validate method from inquirer
+const validateInput = (userInput) => {
+  if (userInput === '') {
+    // if it is an empty string with no input post a comment
+    return "No value entered. Please enter a value.";
+  } else return true;
+}
 // inquirer questions 
 // questions for Manager on initial start
 function promptMemberQuestions(){
@@ -135,6 +123,21 @@ function promptInternQuestions(){
   })
 }
 // initialize the application
+const init = async () => {
+  await inquirer.prompt([
+    {
+      name: 'welcome',
+      message: 'Welcome to your Team Generator. Would you like to begin?',
+      // default return is a Boolean. True is yes, false if No
+      type: 'confirm',
+    }
+  ])
+  if (welcome) {
+    // start manager questions
+    pr
+  } else return;
+}
+/*
 function init() {
   inquirer.prompt(managerQuestionsArray)
   .then((answers) =>{
@@ -147,7 +150,7 @@ function init() {
     console.log(error);
   })
 }
-
+*/
 // will need a function to generate the HTML and write to file
 function generateTeam(){
   
