@@ -6,7 +6,7 @@ const fs = require('fs');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const managerQuestions = require('./lib/managerQuestions')
+const managerQuestionsPrompt = require('./lib/managerQuestions')
 
 // array will be needed to put the answers into
 const generatedTeamArray = [];
@@ -132,10 +132,17 @@ const init = async () => {
       type: 'confirm',
     }
   ])
-  if (welcome) {
+  console.log(this);
+  if (!this) {
+    return;
+  } else {  
     // start manager questions
-    pr
-  } else return;
+   const managerAnswers = await managerQuestionsPrompt();
+   console.log(managerAnswers);
+   const manager = new Manager(managerAnswers)
+  generatedTeamArray.push(manager)
+   console.log(generatedTeamArray);
+  }
 }
 /*
 function init() {
