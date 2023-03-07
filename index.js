@@ -85,6 +85,81 @@ const internQuestionsArray = [
 ]
 // inquirer questions 
 // questions for Manager on initial start
+function promptMemberQuestions(){
+  inquirer.prompt(newMemberQuestion)
+  .then((answers) =>{
+    console.log(answers);
+    if (answers.role === 'Engineer') {
+      promptEngineerQuestions();
+    }
+    else if (answers.role === 'Intern') {
+      promptInternQuestions();
+    }
+    else if (answers.role === 'Finished'){
+      console.log(generatedTeamArray);
+      generateTeam();
+      return;
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+}
+
+// function to prompt engineer questions
+function promptEngineerQuestions(){
+  inquirer.prompt(engineerQuestionsArray)
+  .then((answers) =>{
+    // add the role to the object
+    answers['role']= 'Manager';
+    console.log(answers);
+    promptMemberQuestions();
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+}
+
+//function to prompt intern questions
+function promptInternQuestions(){
+  inquirer.prompt(internQuestionsArray)
+  .then((answers) =>{
+    answers['role']= 'Intern';
+    console.log(answers);
+    generatedTeamArray.push(answers)
+    console.log(generatedTeamArray);
+    promptMemberQuestions();
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+}
+// initialize the application
+function init() {
+  inquirer.prompt(managerQuestionsArray)
+  .then((answers) =>{
+    answers['role']= 'Manager';
+    console.log(answers);
+    generatedTeamArray.push(answers)
+    promptMemberQuestions()
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+}
+
+// will need a function to generate the HTML and write to file
+function generateTeam(){
+  
+}
+
+init()
+
+// looping array to generate the html
+for (let peopleObj of generatedTeamArray){
+  let name = peopleObj.name
+  let employeeId = peopleObj.employeeId
+}
 /* 
 const questions = async() => {
   const managerAnswers = await inquirer
@@ -181,78 +256,3 @@ const questions = async() => {
     ])
   }
   */
-function promptMemberQuestions(){
-  inquirer.prompt(newMemberQuestion)
-  .then((answers) =>{
-    console.log(answers);
-    if (answers.role === 'Engineer') {
-      promptEngineerQuestions();
-    }
-    else if (answers.role === 'Intern') {
-      promptInternQuestions();
-    }
-    else if (answers.role === 'Finished'){
-      console.log(generatedTeamArray);
-      generateTeam();
-      return;
-    }
-  })
-  .catch((error) => {
-  console.log(error);
-  })
-}
-
-// function to prompt engineer questions
-function promptEngineerQuestions(){
-  inquirer.prompt(engineerQuestionsArray)
-  .then((answers) =>{
-    // add the role to the object
-    answers['role']= 'Manager';
-    console.log(answers);
-    promptMemberQuestions();
-  })
-  .catch((error) => {
-  console.log(error);
-  })
-}
-
-//function to prompt intern questions
-function promptInternQuestions(){
-  inquirer.prompt(internQuestionsArray)
-  .then((answers) =>{
-    answers['role']= 'Intern';
-    console.log(answers);
-    generatedTeamArray.push(answers)
-    console.log(generatedTeamArray);
-    promptMemberQuestions();
-  })
-  .catch((error) => {
-  console.log(error);
-  })
-}
-// initialize the application
-function init() {
-  inquirer.prompt(managerQuestionsArray)
-    .then((answers) =>{
-      answers['role']= 'Manager';
-      console.log(answers);
-      generatedTeamArray.push(answers)
-      promptMemberQuestions()
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-}
-    
-    // will need a function to generate the HTML and write to file
-    function generateTeam(){
-      
-}
-
- init()
-
- // looping array to generate the html
- for (let peopleObj of generatedTeamArray){
-  let name = peopleObj.name
-  let employeeId = peopleObj.employeeId
- }
