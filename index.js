@@ -22,8 +22,6 @@ const newTeamMemberQuestion = [
   }
 ]
 
-
-
 //check prompt inputs using validate method from inquirer
 const validateInput = (userInput) => {
   if (userInput === '') {
@@ -47,31 +45,33 @@ const init = async () => {
     // start manager questions with a prompt
     inquirer.prompt(managerQuestionsPrompt)
     .then((answers) => {
-      const teamManager = new Manager(answers.name, answers.employeeId, answers.emailAddress, answers.officeNumber);
+      const teamManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
       console.log(teamManager);
       generatedTeamArray.push(teamManager)
-      console.log(generatedTeamArray);
       addTeamMemeber();
     })
   };
 };
-
 const addTeamMemeber = () => {
   inquirer.prompt(newTeamMemberQuestion)
   .then((answer) =>{
-    if (answer.role === 'None'){
+    if (answer.role === 'Finished'){
+      console.log(generatedTeamArray);
       return;
     } else if (answer.role === 'Engineer') {
       inquirer.prompt(engineerQuestionsPrompt)
       .then((answers) => {
-        const EngineerAnswers = new Engineer(answers.name, answers.employeeId, answers.emailAddress, answers.github);
+        const EngineerAnswers = new Engineer(answers.name, answers.id, answers.email, answers.github);
+        generatedTeamArray.push(Engineer)
         console.log(EngineerAnswers);
+        console.log(generatedTeamArray[1]);
         addTeamMemeber();
       })
     } else if (answer.role === 'Intern') {
       inquirer.prompt(internQuestionsPrompt)
       .then((answers) => {
-        const InternAnswers = new Intern(answers.name, answers.employeeId, answers.emailAddress, answers.school);
+        const InternAnswers = new Intern(answers.name, answers.id, answers.email, answers.school);
+        generatedTeamArray.push(Intern);
         console.log(InternAnswers);
         addTeamMemeber();
       })
@@ -90,151 +90,3 @@ const addTeamMemeber = () => {
     let name = peopleObj.name
     let employeeId = peopleObj.employeeId
   }
-  // inquirer questions 
-  // questions for Manager on initial start
-  /*function promptMemberQuestions(){
-    inquirer.prompt(newMemberQuestion)
-    .then((answers) =>{
-      console.log(answers);
-      if (answers.role === 'Engineer') {
-        promptEngineerQuestions();
-      }
-      else if (answers.role === 'Intern') {
-        promptInternQuestions();
-      }
-      else if (answers.role === 'Finished'){
-        console.log(generatedTeamArray);
-        generateTeam();
-        return;
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
-  
-  // function to prompt engineer questions
-  function promptEngineerQuestions(){
-    inquirer.prompt(engineerQuestionsArray)
-    .then((answers) =>{
-      // add the role to the object
-      answers['role']= 'Manager';
-      console.log(answers);
-      promptMemberQuestions();
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
-  
-  //function to prompt intern questions
-  function promptInternQuestions(){
-    inquirer.prompt(internQuestionsArray)
-    .then((answers) =>{
-      answers['role']= 'Intern';
-      console.log(answers);
-      generatedTeamArray.push(answers)
-      console.log(generatedTeamArray);
-      promptMemberQuestions();
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
-  */
-  /* 
-  const questions = async() => {
-    const managerAnswers = await inquirer
-    .prompt([
-      {
-        type: 'input',
-        message: 'What is the team manager\'s name?',
-        name: 'name',
-      },
-      {
-        type: 'input',
-        message: 'What is the team manager\'s employee ID',
-        name: 'employeeId',
-      },
-      {
-        type: 'input',
-        message: 'What is the team manager\'s email address?',
-        name: 'emailAddress',
-      },
-      {
-        type: 'input',
-        message: 'What is the team manger\'s Office Number',
-        name: 'officeNumber',
-      },
-    ])
-    
-    // questions for Engineer
-    if (managerAnswers.role === 'Engineer'){
-      const engineerAnswers = await inquirer
-      .prompt([
-        {
-          type: 'input',
-          message: 'What is your engineer\'s name?',
-          name: 'name',
-        },
-        {
-          type: 'input',
-          message: 'What is your engineer\'s employee ID',
-          name: 'employeeId',
-        },
-        {
-          type: 'input',
-          message: 'What is your engineer\'s email address?',
-          name: 'emailAddress',
-        },
-        {
-          type: 'input',
-          message: 'What is your engineer\'s GitHub username?',
-          name: 'github',
-        },
-      ])
-    }
-    // questions for Intern
-    if (managerAnswers.role === 'Intern'){
-      const internAnswers = await inquirer
-      .prompt([
-        {
-          type: 'input',
-          message: 'What is your intern\'s name?',
-          name: 'name',
-        },
-        {
-          type: 'input',
-          message: 'What is your inern\'s employee ID',
-          name: 'employeeId',
-        },
-        {
-          type: 'input',
-          message: 'What is your intern\'s email address?',
-          name: 'emailAddress',
-        },
-        {
-          type: 'input',
-          message: 'What school does your intern attend?',
-          name: 'school',
-        },
-      ])
-    }
-    console.log(managerAnswers);
-  }
-
-  //funciton to ask member questions outside of manager questions
-  async function promptMemberQuestions(){
-    await questions
-    
-    const promptNewMemberAdd = await inquirer
-    .prompt([
-      {
-        type: 'list',
-        message: 'Which type of meamber would you like to add to your team?',
-        name: 'role',
-        choices: ['Enngineer', 'Intern', 'Finished']
-      },
-    ])
-  }
-  */
