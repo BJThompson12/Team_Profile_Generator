@@ -73,7 +73,7 @@ const validateInput = (userInput) => {
 }
 // inquirer questions 
 // questions for Manager on initial start
-function promptMemberQuestions(){
+/*function promptMemberQuestions(){
   inquirer.prompt(newMemberQuestion)
   .then((answers) =>{
     console.log(answers);
@@ -93,7 +93,7 @@ function promptMemberQuestions(){
     console.log(error);
   })
 }
-
+*/
 // function to prompt engineer questions
 function promptEngineerQuestions(){
   inquirer.prompt(engineerQuestionsArray)
@@ -122,6 +122,7 @@ function promptInternQuestions(){
     console.log(error);
   })
 }
+
 // initialize the application
 const init = async () => {
   await inquirer.prompt([
@@ -135,13 +136,15 @@ const init = async () => {
   console.log(this);
   if (!this) {
     return;
-  } else {  
-    // start manager questions
-   const managerAnswers = await managerQuestionsPrompt();
-   console.log(managerAnswers);
-   const manager = new Manager(managerAnswers)
-  generatedTeamArray.push(manager)
-   console.log(generatedTeamArray);
+  } else {
+    // start manager questions with a prompt
+   inquirer.prompt(managerQuestionsPrompt)
+   .then((managerAnswers) => {
+    const teamManager = new Manager(managerAnswers.name, managerAnswers.employeeId, managerAnswers.emailAddress, managerAnswers.officeNumber);
+    console.log(teamManager);
+     generatedTeamArray.push(teamManager)
+     console.log(generatedTeamArray);
+   })
   }
 }
 /*
