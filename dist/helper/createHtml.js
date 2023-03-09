@@ -6,7 +6,7 @@ const html =[];
 const generateHtml = (generatedTeamArray) => {
   let data = generatedTeamArray;
   createCards(data);
-  let employeeCards = inputData(html)
+  let employeeCards = inputData(html.join(''))
   fs.writeFile('./dist/team.html', employeeCards, (error) => {
     if(error){
       console.error(error);
@@ -82,18 +82,18 @@ const createCards = (data) => {
 
     // Create loop for all employees
     for (let i = 0; i < data.length; i++) {
-      if (data[i].getRole() === "Manager") {
+      if (data[i].getRole() === 'Manager') {
           createManager(data[i]);
       }
-      if (data[i].getRole() === "Engineer") {
+      if (data[i].getRole() === 'Engineer') {
           createEngineer(data[i]);
       }
-      if (data[i].getRole() === "Intern") {
+      if (data[i].getRole() === 'Intern') {
           createIntern(data[i]);
       }
     }
-    console.log(html);
-    return html.join('');
+
+    return html;
   }
 
 const inputData = (html) => {
