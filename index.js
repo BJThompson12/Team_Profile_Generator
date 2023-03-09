@@ -9,6 +9,7 @@ const Intern = require('./lib/Intern');
 const managerQuestionsPrompt = require('./lib/managerQuestions')
 const engineerQuestionsPrompt = require('./lib/engineerQuestions')
 const internQuestionsPrompt = require('./lib/internQuestions')
+const generateHtml = require('./dist/helper/createHtml')
 
 // array will be needed to put the answers into
 const generatedTeamArray = [];
@@ -37,8 +38,8 @@ const addTeamMemeber = () => {
   inquirer.prompt(newTeamMemberQuestion)
   .then((answer) =>{
     if ('Finished'){
-      console.log(generatedTeamArray);
-      console.log('generate html function will go here');
+      generateHtml(generatedTeamArray);
+     // completeIntake(generatedTeamArray);
     } else if (answer.role === 'Engineer') {
       inquirer.prompt(engineerQuestionsPrompt)
       .then((answers) => {
@@ -59,10 +60,6 @@ const addTeamMemeber = () => {
     }
   })
 };
-  // will need a function to generate the HTML and write to file
-  function generateTeam(){
-    
-  }
   
   init()
   
