@@ -27,7 +27,6 @@ const newTeamMemberQuestion = [
 const init = async () => {
   await inquirer.prompt(managerQuestionsPrompt)
     .then((answers) => {
-      console.log(answers);
       const teamManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
       generatedTeamArray.push(teamManager)
       addTeamMemeber();
