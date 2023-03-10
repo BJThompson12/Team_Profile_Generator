@@ -9,7 +9,7 @@ const Intern = require('./lib/Intern');
 const managerQuestionsPrompt = require('./lib/managerQuestions')
 const engineerQuestionsPrompt = require('./lib/engineerQuestions')
 const internQuestionsPrompt = require('./lib/internQuestions')
-const generateHtml = require('./dist/helper/createHtml')
+const generateHtml = require('./src/helper/createHtml')
 
 // array will be needed to put the answers into
 const generatedTeamArray = [];
@@ -27,6 +27,7 @@ const newTeamMemberQuestion = [
 const init = async () => {
   await inquirer.prompt(managerQuestionsPrompt)
     .then((answers) => {
+      console.log(answers);
       const teamManager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
       generatedTeamArray.push(teamManager)
       addTeamMemeber();
