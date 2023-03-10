@@ -48,7 +48,6 @@ const addTeamMemeber = () => {
       .then((answers) => {
         const InternAnswers = new Intern(answers.name, answers.id, answers.email, answers.school);
         generatedTeamArray.push(InternAnswers);
-        console.log(InternAnswers);
         addTeamMemeber();
       })
     } else {
