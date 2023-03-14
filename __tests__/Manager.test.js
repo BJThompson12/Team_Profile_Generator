@@ -3,7 +3,6 @@ const Employee = require('../lib/Employee')
 const Manager = require('../lib/Manager')
 
 // Testing object
-
 // test instantiation of Manager
 test('Can initiate Manager instance', () => {
   const e = new Manager()
@@ -17,7 +16,6 @@ test('I can get office Number via constructor', () => {
   const e = new Manager('Batman', 1906, 'Bats@justice.com', officeNumber)
   expect(e.officeNumber).toBe(officeNumber)
 })
-
 
 // Testing the methods
 // getRole()
